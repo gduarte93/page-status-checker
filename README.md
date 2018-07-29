@@ -1,4 +1,4 @@
-# page-status-checker
+# Page Status Checker
 
 - Checks website pages to see if they are up, down, or slow to respond
 - Server/API written in Go
