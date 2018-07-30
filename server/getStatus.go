@@ -53,6 +53,7 @@ func getStatusHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func checkLink(link string, c chan []string) {
+	// If page takes longer than 10 seconds to respond, timeout
 	timeout := time.Duration(10 * time.Second)
 	client := http.Client{
 		Timeout: timeout,
