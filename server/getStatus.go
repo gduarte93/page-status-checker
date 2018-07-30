@@ -10,7 +10,7 @@ import (
 )
 
 func getStatusHandler(w http.ResponseWriter, r *http.Request) {
-	pages := make(map[string]int)
+	pages := make(map[string]map[string]int)
 	links := []string{
 		"http://google.com",
 		"http://facebook.com",
@@ -30,7 +30,12 @@ func getStatusHandler(w http.ResponseWriter, r *http.Request) {
 	i := 0
 	for l := range c {
 		num, _ := strconv.Atoi(l[1])
-		pages[l[0]] = num
+		if len(l) > 2 {
+			code, _ := strconv.Atoi(l[2])
+			pages[l[0]] = map[string]int{"status": num, "code": code}
+		} else {
+			pages[l[0]] = map[string]int{"status": num}
+		}
 
 		if i >= len(links)-1 {
 			close(c)
@@ -62,7 +67,12 @@ func checkLink(link string, c chan []string) {
 		c <- []string{link, "0"} // 0 when page is down
 		return
 	}
+
 	fmt.Println(link + " looks up: " + strconv.Itoa(resp.StatusCode))
-	c <- []string{link, "1"} // 1 when page is up
+	if resp.StatusCode == 200 {
+		c <- []string{link, "1", strconv.Itoa(resp.StatusCode)} // 1 when page is serving 200
+	} else {
+		c <- []string{link, "2", strconv.Itoa(resp.StatusCode)} // 2 when page is serving anything, but 200
+	}
 
 }

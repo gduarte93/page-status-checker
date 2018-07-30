@@ -8,9 +8,10 @@ function getAPI() {
 }
 
 class ListItem {
-    constructor(url, status) {
+    constructor(url, res) {
         this.url = url;
-        this.status = status;
+        this.status = res.status;
+        this.code = res.status === 2 && !res.code ? 'timeout' : res.code;
     }
 
     getStatus() {
@@ -27,7 +28,8 @@ class ListItem {
         let li = document.createElement('li');
         let label = document.createElement('div');
         let link = document.createElement('a');
-        let status = document.createElement('div');
+        let statusDot = document.createElement('div');
+        let statusCode = document.createElement('div');
 
         label.setAttribute('class', 'list-label');
         
@@ -35,11 +37,18 @@ class ListItem {
         link.setAttribute('target', "_blank");
         link.textContent = this.url;
         
-        status.setAttribute('class', `status ${this.getStatus()}`);
+        statusDot.setAttribute('class', `status ${this.getStatus()}`);
+
+        if (this.code) {
+            const isTimeout = this.code === 'timeout' ? ' timeout': '';
+            statusCode.setAttribute('class', `status-code${isTimeout}`);
+            statusCode.textContent = this.code;
+            statusDot.appendChild(statusCode)
+        }
 
         label.appendChild(link);
         li.appendChild(label);
-        li.appendChild(status);
+        li.appendChild(statusDot);
 
         return li;
     }

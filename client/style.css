@@ -42,13 +42,27 @@
 }
 
 .status.up {
+    color: #27ae60;
     background-color: #27ae60;
 }
 
 .status.slow {
+    color: #feca57;
     background-color: #feca57;
 }
 
 .status.down {
+    color: #e74c3c;
     background-color: #e74c3c;
+}
+
+.status-code {
+    position: relative;
+    left: -30px;
+    background-color: white;
+    width: min-content;
+}
+
+.status-code.timeout {
+    left: -55px;
 }
