@@ -1,3 +1,8 @@
+.list-container {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
 .list {
     list-style-type: none;
     padding: 0;
@@ -6,10 +11,21 @@
 
 .list li {
     overflow: auto;
-    
+    display: flex;
+    align-items: center;
+
     border-width: 1px 1px 0px 1px;
     border-style: solid;
-    border-color: black;
+    border-color: #95a5a6;
+
+    padding: 8px 10px 8px 10px;
+
+    min-height: 35px;
+    box-sizing: border-box;
+}
+
+.list li:nth-child(odd) {
+    background-color: #ecf0f1;
 }
 
 .list li:first-child {
@@ -23,14 +39,12 @@
 
 .list-label {
     float: left;
-    width: 90%;
     overflow: hidden;
+    flex-grow: 1;
 }
 
 .list-label a {
-    padding: 10px 0px 10px 10px;
     float: left;
-    width: 100%;
 }
 
 .status {
@@ -38,7 +52,10 @@
     height: 16px;    
     border-radius: 100%;
     float: right;
-    margin: 10px 10px 10px 0px;
+    margin: 0px 10px 0px 40px;
+
+    color: #bdc3c7;
+    background-color: #bdc3c7;
 }
 
 .status.up {
@@ -59,7 +76,6 @@
 .status-code {
     position: relative;
     left: -30px;
-    background-color: white;
     width: min-content;
 }
 

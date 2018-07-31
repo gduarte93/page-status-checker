@@ -2,7 +2,6 @@ function getAPI() {
     return fetch(`/getStatus`)
             .then((res) => res.json())
             .then((data) => {
-                console.log(data);
                 return data;
             });
 }
@@ -39,12 +38,10 @@ class ListItem {
         
         statusDot.setAttribute('class', `status ${this.getStatus()}`);
 
-        if (this.code) {
-            const isTimeout = this.code === 'timeout' ? ' timeout': '';
-            statusCode.setAttribute('class', `status-code${isTimeout}`);
-            statusCode.textContent = this.code;
-            statusDot.appendChild(statusCode)
-        }
+        const isTimeout = this.code === 'timeout' ? ' timeout': '';
+        statusCode.setAttribute('class', `status-code${isTimeout}`);
+        statusCode.innerHTML = this.code || "&nbsp;&nbsp;&nbsp;&nbsp;";
+        statusDot.appendChild(statusCode)
 
         label.appendChild(link);
         li.appendChild(label);
@@ -90,11 +87,10 @@ class Loading {
 
 window.onload = async () => {
     const app = document.getElementById('app');
-    const loading = new Loading().render();
-    app.appendChild(loading);
+    const loading = document.getElementById('dom-placeholder');
     
     const data = await getAPI();
-    app.removeChild(loading);
+    document.body.removeChild(loading);
     
     app.appendChild(new List(data).render());
 }
