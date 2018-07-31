@@ -49,7 +49,7 @@ func getStatusHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	fmt.Fprintf(w, string(jPages))
+	fmt.Fprint(w, string(jPages))
 }
 
 func checkLink(link string, c chan []string) {
